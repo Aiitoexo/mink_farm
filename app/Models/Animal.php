@@ -15,16 +15,21 @@ class Animal extends Model
 
     public function type(): BelongsTo
     {
-        return $this->belongsTo(AnimalType::class);
+        return $this->belongsTo(AnimalType::class, 'animal_type_id');
     }
 
     public function breed(): BelongsTo
     {
-        return $this->belongsTo(AnimalBreed::class);
+        return $this->belongsTo(AnimalBreed::class, 'animal_breed_id');
     }
 
     public function photos(): HasMany
     {
         return $this->hasMany(AnimalPhoto::class);
+    }
+
+    public function getAnimalAvailable()
+    {
+        return $this->where('available', true)->get();
     }
 }

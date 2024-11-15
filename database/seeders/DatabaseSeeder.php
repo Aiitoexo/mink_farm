@@ -2,13 +2,11 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Animal;
 use App\Models\AnimalBreed;
 use App\Models\AnimalPhoto;
 use App\Models\AnimalType;
 use App\Models\User;
-use Database\Factories\AnimalPhotoFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
