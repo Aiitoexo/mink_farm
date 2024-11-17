@@ -9,7 +9,17 @@
 
                 <nav class="flex items-center gap-6">
                     <button
+                        v-if="!auth"
                         class="px-4 py-2 bg-autumn-600 text-autumn-50 rounded-lg hover:bg-autumn-700 transition-colors"
+                        @click="$emit('modalLogin', true)"
+                    >
+                        Administration
+                    </button>
+
+                    <button
+                        v-if="auth"
+                        class="px-4 py-2 bg-autumn-600 text-autumn-50 rounded-lg hover:bg-autumn-700 transition-colors"
+                        @click="dashboard"
                     >
                         Administration
                     </button>
@@ -21,11 +31,24 @@
 
 <script>
 import { PawPrint } from 'lucide-vue-next'
+import { router } from '@inertiajs/vue3'
 
 export default {
     name: 'Header',
     components: {
         PawPrint
+    },
+    props: {
+        auth: {
+            type: Boolean,
+            required: false,
+            default: false
+        }
+    },
+    methods: {
+        dashboard() {
+            router.get('/admin')
+        }
     }
 }
 </script>

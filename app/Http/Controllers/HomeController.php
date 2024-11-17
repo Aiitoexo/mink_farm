@@ -16,9 +16,12 @@ class HomeController extends Controller
 
         $types = AnimalType::all()->select('name', 'id');
 
+        $auth = (bool)auth()->user();
+
         return Inertia::render('Guest/Index', [
             'animals' => $animals,
             'types' => $types,
+            'auth' => $auth,
         ]);
     }
 }

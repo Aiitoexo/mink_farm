@@ -1,34 +1,38 @@
 <template>
-    <div class="relative lg:w-4/5 xl:w-4/6 mx-auto grid grid-cols-6 gap-6 px-6 lg:px-0">
-        <div class="col-span-6">
-            <FilterBar
-                :types="types"
-                @search="updateSearch"
-                @filter="updateFilter"
-                @sort="updateSort"
+    <GuestLayout
+        :auth="auth"
+    >
+        <div class="relative lg:w-4/5 xl:w-4/6 mx-auto grid grid-cols-6 gap-6 px-6 lg:px-0">
+            <div class="col-span-6">
+                <FilterBar
+                    :types="types"
+                    @search="updateSearch"
+                    @filter="updateFilter"
+                    @sort="updateSort"
+                />
+            </div>
+
+            <AnimalCard
+                v-for="animal in allResults"
+                key="animal.id"
+                :animal="animal"
+                @showModal="photosModal = $event; activeModal = true"
+                @contactModal="selectedAnimal = $event; contactModal = true"
+            />
+
+            <ImageModal
+                v-if="activeModal"
+                :photos="photosModal"
+                @close="activeModal = false; photosModal = []"
+            />
+
+            <ContactModal
+                v-if="contactModal"
+                :animal="selectedAnimal"
+                @close="contactModal = false"
             />
         </div>
-
-        <AnimalCard
-            v-for="animal in allResults"
-            key="animal.id"
-            :animal="animal"
-            @showModal="photosModal = $event; activeModal = true"
-            @contactModal="selectedAnimal = $event; contactModal = true"
-        />
-
-        <ImageModal
-            v-if="activeModal"
-            :photos="photosModal"
-            @close="activeModal = false; photosModal = []"
-        />
-
-        <ContactModal
-            v-if="contactModal"
-            :animal="selectedAnimal"
-            @close="contactModal = false"
-        />
-    </div>
+    </GuestLayout>
 </template>
 
 <script>
@@ -38,14 +42,14 @@ import ImageModal from "@/Components/ImageModal.vue";
 import ContactModal from "@/Components/ContactModal.vue";
 import FilterBar from "@/Components/FilterBar.vue";
 export default {
-    name: "Index",
+    name: "GuestIndex",
     components: {
+        GuestLayout,
         ImageModal,
         AnimalCard,
         ContactModal,
-        FilterBar
+        FilterBar,
     },
-    layout: GuestLayout,
     props: {
         animals: {
             type: Object,
@@ -54,6 +58,9 @@ export default {
         types: {
             type: Object,
             required: true
+        },
+        auth: {
+            type: Boolean,
         }
     },
     data() {

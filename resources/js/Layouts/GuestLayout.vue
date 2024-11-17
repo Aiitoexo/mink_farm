@@ -1,6 +1,9 @@
 <template>
-    <div class="w-full min-h-screen bg-autumn-50">
-        <Header />
+    <div class="w-full min-h-screen bg-autumn-50 relative">
+        <Header
+            @modalLogin="activeModal"
+            :auth="auth"
+        />
 
         <div class="relative h-[500px] overflow-hidden mb-6">
             <img
@@ -16,16 +19,41 @@
             </div>
         </div>
 
-        <slot></slot>
+        <slot @auth="isAuth = $event ?? false"></slot>
+
+        <AdminLoginModal
+            v-if="modalLogin"
+            @close="modalLogin = false"
+        />
     </div>
 </template>
 
 <script>
 import Header from "@/Components/Header.vue";
+import AdminLoginModal from "@/Components/AdminLoginModal.vue";
 export default {
     name: "GuestLayout",
     components: {
-        Header
+        Header,
+        AdminLoginModal
+    },
+    props: {
+        auth: {
+            type: Boolean,
+            required: false,
+            default: false
+        }
+    },
+    data() {
+        return {
+            modalLogin: false,
+            isAuth: false
+        };
+    },
+    methods: {
+        activeModal(value) {
+            this.modalLogin = value;
+        },
     }
 };
 </script>
