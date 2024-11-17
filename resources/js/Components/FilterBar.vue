@@ -7,13 +7,13 @@
                     type="text"
                     placeholder="Rechercher par nom ou race..."
                     class="w-full pl-10 pr-4 py-2 border border-autumn-200 rounded-lg focus:ring-2 focus:ring-autumn-500 focus:border-transparent"
-                    @input="$emit('search', $event.target.value)"
+                    @input="searchQuery = $event.target.value"
                 />
             </div>
 
             <select
                 class="col-span-4 md:col-span-2 xl:col-span-1 px-4 py-2 border border-autumn-200 rounded-lg focus:ring-2 focus:ring-autumn-500 focus:border-transparent"
-                @change="$emit('filter', $event.target.value)"
+                @change="selectedFilter = $event.target.value"
             >
                 <option value="all">Tous les types</option>
                 <option v-for="type in types" :value="type.id">{{ type.name }}</option>
@@ -21,7 +21,7 @@
 
             <select
                 class="col-span-4 md:col-span-2 xl:col-span-1 px-4 py-2 border border-autumn-200 rounded-lg focus:ring-2 focus:ring-autumn-500 focus:border-transparent"
-                @change="$emit('sort', $event.target.value)"
+                @change="selectedSort = $event.target.value"
             >
                 <option value="price-asc">Prix : Croissant</option>
                 <option value="price-desc">Prix : Décroissant</option>
@@ -43,6 +43,66 @@ export default {
         types: {
             type: Object,
             required: true
+        },
+        animals: {
+            type: Object,
+            required: true
+        }
+    },
+    data() {
+        return {
+            searchQuery: '',
+            selectedFilter: 'all',
+            selectedSort: 'price-asc',
+            initialAnimals: this.animals,
+            allResults: this.animals,
+        };
+    },
+    watch: {
+        searchQuery() {
+            this.applyFilters();
+        },
+        selectedFilter() {
+            this.applyFilters();
+        },
+        selectedSort() {
+            this.applyFilters();
+        },
+        allResults() {
+            this.$emit('results', this.allResults);
+        }
+    },
+    methods: {
+        applyFilters() {
+            let results = [...this.initialAnimals];
+
+            // Filter by search query
+            if (this.searchQuery && this.searchQuery.length >= 2) {
+                results = results.filter(animal => {
+                    return (
+                        animal.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                        animal.breed.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+                    );
+                });
+            }
+
+            // Filter by type
+            if (this.selectedFilter !== 'all') {
+                results = results.filter(animal => animal.type.id == this.selectedFilter);
+            }
+
+            // Filter by sort
+            if (this.selectedSort === 'price-asc') {
+                results.sort((a, b) => a.price - b.price);
+            } else if (this.selectedSort === 'price-desc') {
+                results.sort((a, b) => b.price - a.price);
+            } else if (this.selectedSort === 'age-asc') {
+                results.sort((a, b) => a.age - b.age);
+            } else if (this.selectedSort === 'age-desc') {
+                results.sort((a, b) => b.age - a.age);
+            }
+
+            this.allResults = results;
         }
     }
 }

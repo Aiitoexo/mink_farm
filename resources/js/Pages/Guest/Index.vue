@@ -6,9 +6,8 @@
             <div class="col-span-6">
                 <FilterBar
                     :types="types"
-                    @search="updateSearch"
-                    @filter="updateFilter"
-                    @sort="updateSort"
+                    :animals="animals"
+                    @results="updateResult"
                 />
             </div>
 
@@ -36,7 +35,7 @@
 </template>
 
 <script>
-import GuestLayout from '@/Layouts/GuestLayout.vue'
+import GuestLayout from '@/Layouts/Layout.vue'
 import AnimalCard from "@/Components/AnimalCard.vue";
 import ImageModal from "@/Components/ImageModal.vue";
 import ContactModal from "@/Components/ContactModal.vue";
@@ -71,61 +70,10 @@ export default {
             photosModal: [],
             contactModal: false,
             selectedAnimal: {},
-            searchQuery: '',
-            selectedFilter: 'all',
-            selectedSort: ''
-        }
-    },
-    watch: {
-        searchQuery() {
-            this.applyFilters();
-        },
-        selectedFilter() {
-            this.applyFilters();
-        },
-        selectedSort() {
-            this.applyFilters();
         }
     },
     methods: {
-        updateSearch(value) {
-            this.searchQuery = value;
-        },
-        updateFilter(value) {
-            this.selectedFilter = value;
-        },
-        updateSort(value) {
-            this.selectedSort = value;
-        },
-        applyFilters() {
-            let results = [...this.initialAnimals];
-
-            // Filter by search query
-            if (this.searchQuery && this.searchQuery.length >= 2) {
-                results = results.filter(animal => {
-                    return (
-                        animal.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-                        animal.breed.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-                    );
-                });
-            }
-
-            // Filter by type
-            if (this.selectedFilter !== 'all') {
-                results = results.filter(animal => animal.type.id == this.selectedFilter);
-            }
-
-            // Filter by sort
-            if (this.selectedSort === 'price-asc') {
-                results.sort((a, b) => a.price - b.price);
-            } else if (this.selectedSort === 'price-desc') {
-                results.sort((a, b) => b.price - a.price);
-            } else if (this.selectedSort === 'age-asc') {
-                results.sort((a, b) => a.age - b.age);
-            } else if (this.selectedSort === 'age-desc') {
-                results.sort((a, b) => b.age - a.age);
-            }
-
+        updateResult(results) {
             this.allResults = results;
         }
     }

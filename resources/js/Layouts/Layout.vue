@@ -1,11 +1,12 @@
 <template>
-    <div class="w-full min-h-screen bg-autumn-50 relative">
+    <div class="w-full min-h-screen bg-autumn-50 relative space-y-6">
         <Header
             @modalLogin="activeModal"
             :auth="auth"
+            :page="page"
         />
 
-        <div class="relative h-[500px] overflow-hidden mb-6">
+        <div v-if="auth && page === 'guest'" class="relative h-[500px] overflow-hidden">
             <img
                 src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80"
                 alt="Bg Mink Farm"
@@ -42,6 +43,11 @@ export default {
             type: Boolean,
             required: false,
             default: false
+        },
+        page: {
+            type: String,
+            required: false,
+            default: "guest"
         }
     },
     data() {

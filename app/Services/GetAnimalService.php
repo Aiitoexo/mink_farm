@@ -6,12 +6,19 @@ use App\Models\Animal;
 
 class GetAnimalService
 {
-    public function getAnimalAvailable()
+    public function getAnimalsAvailable()
     {
         return $this->format(
             Animal::with('type:name,id', 'breed:name,id', 'photos')
                 ->where('status', 'available')
                 ->get()
+        );
+    }
+
+    public function getAnimals()
+    {
+        return $this->format(
+            Animal::with('type:name,id', 'breed:name,id', 'photos')->get()
         );
     }
 

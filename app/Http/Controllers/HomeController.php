@@ -12,12 +12,12 @@ class HomeController extends Controller
 {
     public function index(GetAnimalService $service): Response
     {
-        $animals = $service->getAnimalAvailable();
+        $animals = $service->getAnimalsAvailable();
 
         $types = AnimalType::all()->select('name', 'id');
 
         $auth = (bool)auth()->user();
-
+//        dd($auth, auth()->user());
         return Inertia::render('Guest/Index', [
             'animals' => $animals,
             'types' => $types,

@@ -19,6 +19,14 @@
                     <button
                         v-if="auth"
                         class="px-4 py-2 bg-autumn-600 text-autumn-50 rounded-lg hover:bg-autumn-700 transition-colors"
+                        @click="logout"
+                    >
+                        Deconnexion
+                    </button>
+
+                    <button
+                        v-if="auth"
+                        class="px-4 py-2 bg-autumn-600 text-autumn-50 rounded-lg hover:bg-autumn-700 transition-colors"
                         @click="dashboard"
                     >
                         Administration
@@ -48,6 +56,9 @@ export default {
     methods: {
         dashboard() {
             router.get('/admin')
+        },
+        logout() {
+           router.post('/logout')
         }
     }
 }
