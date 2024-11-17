@@ -34,7 +34,6 @@
 
                 <div class="col-span-1 lg:col-span-2 flex items-center lg:block gap-2 mb-3 text-autumn-600">
                     <p>{{ animal.type.name }}</p>
-                    <p>{{ animal.breed.name }}</p>
                 </div>
             </div>
 
