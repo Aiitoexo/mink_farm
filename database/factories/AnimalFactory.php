@@ -26,8 +26,8 @@ class AnimalFactory extends Factory
             'animal_type_id' => $type->id,
             'animal_breed_id' => $breed->id,
             'description' => $this->faker->sentence,
-            'price_ttc' => $this->faker->numberBetween(50000, 200000),
-            'price_ht' => $this->faker->numberBetween(50000, 200000),
+            'price_ttc' => $this->faker->numberBetween(5000, 20000),
+            'price_ht' => $this->faker->numberBetween(5000, 20000),
             'status' => $this->faker->randomElement(['available', 'sold']),
         ];
     }

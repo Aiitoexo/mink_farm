@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AnimalType;
 use App\Services\GetAnimalService;
 use Illuminate\Http\Client\Request;
 use Inertia\Inertia;
@@ -13,8 +14,11 @@ class HomeController extends Controller
     {
         $animals = $service->getAnimalAvailable();
 
+        $types = AnimalType::all()->select('name', 'id');
+
         return Inertia::render('Guest/Index', [
             'animals' => $animals,
+            'types' => $types,
         ]);
     }
 }

@@ -13,7 +13,7 @@
                     <img :src="animal.photos[0].url" :alt="animal.name" class="w-16 h-16 rounded-lg object-cover" />
                     <div>
                         <h4 class="font-semibold text-autumn-900">{{ animal.name }}</h4>
-                        <p class="text-autumn-600">{{ animal.breed }}</p>
+                        <p class="text-autumn-600">{{ animal.breed.name }}</p>
                         <p class="text-autumn-800 font-medium">{{ formattedPrice }}€</p>
                     </div>
                 </div>

@@ -21,8 +21,14 @@ class GetAnimalService
             return [
                 'id' => $animal->id,
                 'name' => $animal->name,
-                'type' => $animal->type->name,
-                'breed' => $animal->breed->name,
+                'type' => [
+                    'id' => $animal->type->id,
+                    'name' => $animal->type->name,
+                ],
+                'breed' => [
+                    'id' => $animal->breed->id,
+                    'name' => $animal->breed->name,
+                ],
                 'description' => $animal->description,
                 'age' => $animal->age,
                 'status' => $animal->status,
