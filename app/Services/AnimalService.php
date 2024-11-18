@@ -107,10 +107,11 @@ class AnimalService
             } else {
                 $file = $photo['file'];
                 $uniqueName = date('YmdHis') . '_' . hash('sha256', $file->getClientOriginalName()) . '.' . $file->getClientOriginalExtension();
-                $filePath = $file->storeAs('photos', $uniqueName);
+                $file->move(public_path('photos'), $uniqueName);
+                $publicUrl = asset('photos/' . $uniqueName);
 
                 $animal->photos()->create([
-                    'path' => $filePath,
+                    'path' => $publicUrl,
                     'is_main' => $photo['is_main'] ?? false,
                 ]);
             }
