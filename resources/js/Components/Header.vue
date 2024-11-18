@@ -2,7 +2,7 @@
     <header class="bg-autumn-800/95 text-autumn-50 shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <button class="flex items-center gap-2">
+                <button @click="homepage" class="flex items-center gap-2">
                     <PawPrint class="w-8 h-8 text-harvest-300" />
                     <span class="text-xl font-bold">Mink Farm</span>
                 </button>
@@ -57,6 +57,9 @@ export default {
     methods: {
         dashboard() {
             router.get('/admin')
+        },
+        homepage() {
+            router.get('/')
         },
         logout() {
            router.post('/logout')

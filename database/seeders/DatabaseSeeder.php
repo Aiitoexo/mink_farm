@@ -8,6 +8,7 @@ use App\Models\AnimalPhoto;
 use App\Models\AnimalType;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -71,14 +72,22 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        Animal::factory(50)->create()->each(function (Animal $animal): void {
-           $photos = AnimalPhoto::factory(random_int(2, 5))->create([
-               'animal_id' => $animal->id,
-           ]);
+        $photosStorage = [
+            1 => Storage::url('photos/chien.jpg'),
+            2 => Storage::url('photos/cheval.jpg'),
+            3 => Storage::url('photos/mouton.jpg'),
+            4 => Storage::url('photos/cochon.jpg'),
+        ];
 
-           $photos->first()->update([
-               'is_main' => true,
-           ]);
+        Animal::factory(50)->create()->each(function (Animal $animal) use ($photosStorage): void {
+            for ($i = 0; $i < random_int(2, 5); $i++) {
+                AnimalPhoto::create([
+                    'animal_id' => $animal->id,
+                    'path' => $photosStorage[$animal->animal_type_id],
+                ]);
+            }
+
+            $animal->photos->first()->update(['is_main' => true]);
         });
     }
 }

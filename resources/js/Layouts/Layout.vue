@@ -6,7 +6,7 @@
             :page="page"
         />
 
-        <div v-if="!auth && page === 'guest'" class="relative h-[500px] overflow-hidden">
+        <div v-if="!auth || page === 'guest'" class="relative h-[500px] overflow-hidden mb-6">
             <img
                 src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80"
                 alt="Bg Mink Farm"
