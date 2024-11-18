@@ -1,7 +1,7 @@
 <template>
     <div class="bg-white shadow-md rounded-lg p-4 border border-autumn-100">
         <div class="grid grid-cols-4 gap-4">
-            <div class="relative col-span-4 xl:col-span-2 flex">
+            <div :class="auth ? 'col-span-4 md:col-span-2 xl:col-span-1 relative' : 'relative col-span-4 xl:col-span-2 flex'">
                 <SearchIcon class="absolute left-3 top-1/2 transform -translate-y-1/2 text-autumn-400 w-5 h-5" />
                 <input
                     type="text"
@@ -10,6 +10,16 @@
                     @input="searchQuery = $event.target.value"
                 />
             </div>
+
+            <select
+                v-if="auth"
+                class="col-span-4 md:col-span-2 xl:col-span-1 px-4 py-2 border border-autumn-200 rounded-lg focus:ring-2 focus:ring-autumn-500 focus:border-transparent"
+                @change="selectedStatus = $event.target.value"
+            >
+                <option value="all">Disponible / Vendu</option>
+                <option value="available">Disponible</option>
+                <option value="sold">Vendu</option>
+            </select>
 
             <select
                 class="col-span-4 md:col-span-2 xl:col-span-1 px-4 py-2 border border-autumn-200 rounded-lg focus:ring-2 focus:ring-autumn-500 focus:border-transparent"
@@ -47,6 +57,11 @@ export default {
         animals: {
             type: Object,
             required: true
+        },
+        auth: {
+            type: Boolean,
+            required: false,
+            default: false
         }
     },
     data() {
@@ -54,6 +69,7 @@ export default {
             searchQuery: '',
             selectedFilter: 'all',
             selectedSort: 'price-asc',
+            selectedStatus: 'all',
             initialAnimals: this.animals,
             allResults: this.animals,
         };
@@ -66,6 +82,9 @@ export default {
             this.applyFilters();
         },
         selectedSort() {
+            this.applyFilters();
+        },
+        selectedStatus() {
             this.applyFilters();
         },
         allResults() {
@@ -100,6 +119,15 @@ export default {
                 results.sort((a, b) => a.age - b.age);
             } else if (this.selectedSort === 'age-desc') {
                 results.sort((a, b) => b.age - a.age);
+            }
+
+            // Filter by status
+            if (this.auth) {
+                if (this.selectedStatus === 'available') {
+                    results = results.filter(animal => animal.status === 'available');
+                } else if (this.selectedStatus === 'sold') {
+                    results = results.filter(animal => animal.status === 'sold');
+                }
             }
 
             this.allResults = results;

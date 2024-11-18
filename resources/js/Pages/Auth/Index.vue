@@ -3,18 +3,18 @@
         :auth="auth"
         :page="page"
     >
-        <div class="lg:w-4/5 xl:w-4/6 mx-auto overflow-hidden flex flex-col">
-            <div class="flex justify-between mb-6">
-                <div>
+        <div class="px-6 lg:px-0 lg:w-4/5 xl:w-4/6 mx-auto overflow-hidden flex flex-col">
+            <div class="grid grid-cols-2 mb-6">
+                <div class="col-span-2 md:col-span-1 flex justify-start flex-col">
                   <h1 class="text-3xl font-bold text-autumn-900 mt-6">Administration</h1>
                   <p class="text-gray-500 mt-2">
                       Gestion des animaux
                   </p>
                 </div>
 
-                <div>
+                <div class="col-span-2 md:col-span-1 flex md:justify-end">
                     <button
-                        class="px-4 py-2 bg-autumn-600 text-autumn-50 rounded-lg hover:bg-autumn-700 transition-colors mt-6"
+                        class="h-12 px-4 py-2 bg-autumn-600 text-autumn-50 rounded-lg hover:bg-autumn-700 transition-colors mt-6"
                         @click="openModalForm = true"
                     >
                         Ajouter un animal
@@ -26,6 +26,7 @@
                 :types="types"
                 :animals="animals"
                 @results="updateResult"
+                :auth="auth"
             />
 
             <table class="mt-6 divide-y divide-gray-200 bg-white shadow-md rounded-lg">
@@ -34,16 +35,16 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Animal
                         </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th class="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Type
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Prix
                         </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th class="hidden md:block px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Statut
                         </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th class="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Actions
                         </th>
                     </tr>

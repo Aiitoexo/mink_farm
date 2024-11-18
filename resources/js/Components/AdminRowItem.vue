@@ -16,18 +16,47 @@
                     <div class="text-sm text-gray-500">
                         {{ animal.breed.name }}
                     </div>
+                    <div class="md:hidden text-sm text-gray-900">{{ animal.type.name }}</div>
                 </div>
             </div>
+
+            <div class="block md:hidden">
+                <span
+                    :class="[
+                    'px-2 inline-flex text-xs leading-5 font-semibold rounded-full mt-2',
+                    animal.status === 'available'
+                      ? 'bg-green-100 text-green-800'
+                      : 'bg-gray-100 text-gray-800'
+                  ]"
+                    >
+                  {{ animal.status === 'available' ? 'Disponible' : 'Vendu' }}
+                </span>
+            </div>
         </td>
-        <td class="px-6 py-4 whitespace-nowrap">
+        <td class="hidden md:table-cell px-6 py-4 whitespace-nowrap">
             <div class="text-sm text-gray-900">{{ animal.type.name }}</div>
         </td>
-        <td class="px-6 py-4 whitespace-nowrap">
+        <td class="px-6 py-4 whitespace-nowrap space-y-10">
             <div class="text-sm text-gray-900">
                 {{ animal.price }}€
             </div>
+
+            <div class="md:hidden flex gap-2">
+                <button
+                    @click="this.$emit('openForm', animal)"
+                    class="text-autumn-600 hover:text-autumn-900"
+                >
+                    <Pencil class="w-5 h-5" />
+                </button>
+                <button
+                    @click="this.$emit('deleteAnimal', animal)"
+                    class="text-red-600 hover:text-red-900"
+                >
+                    <Trash2 class="w-5 h-5" />
+                </button>
+            </div>
         </td>
-        <td class="px-6 py-4 whitespace-nowrap">
+        <td class="hidden md:table-cell px-6 py-4 whitespace-nowrap">
             <span
                 :class="[
                 'px-2 inline-flex text-xs leading-5 font-semibold rounded-full',
@@ -39,7 +68,7 @@
               {{ animal.status === 'available' ? 'Disponible' : 'Vendu' }}
             </span>
         </td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+        <td class="hidden md:table-cell px-6 py-4 whitespace-nowrap text-sm font-medium">
             <div class="flex gap-2">
                 <button
                     @click="this.$emit('openForm', animal)"

@@ -7,7 +7,7 @@
                     <span class="text-xl font-bold">Mink Farm</span>
                 </button>
 
-                <nav class="flex items-center gap-6">
+                <nav class="flex items-center gap-1 md:gap-6">
                     <button
                         v-if="!auth"
                         class="px-4 py-2 bg-autumn-600 text-autumn-50 rounded-lg hover:bg-autumn-700 transition-colors"
@@ -18,10 +18,10 @@
 
                     <button
                         v-if="auth"
-                        class="px-4 py-2 bg-autumn-600 text-autumn-50 rounded-lg hover:bg-autumn-700 transition-colors"
+                        class="px-4 py-2 bg-red-700 text-autumn-50 rounded-lg hover:bg-red-800 transition-colors"
                         @click="logout"
                     >
-                        Deconnexion
+                        <LogOut />
                     </button>
 
                     <button
@@ -38,13 +38,14 @@
 </template>
 
 <script>
-import { PawPrint } from 'lucide-vue-next'
+import { PawPrint, LogOut } from 'lucide-vue-next'
 import { router } from '@inertiajs/vue3'
 
 export default {
     name: 'Header',
     components: {
-        PawPrint
+        PawPrint,
+        LogOut
     },
     props: {
         auth: {

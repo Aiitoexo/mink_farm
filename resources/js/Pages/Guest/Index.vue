@@ -8,6 +8,7 @@
                     :types="types"
                     :animals="animals"
                     @results="updateResult"
+                    :auth="auth"
                 />
             </div>
 

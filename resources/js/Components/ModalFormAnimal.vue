@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed inset-0 -top-6 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+    <div class="fixed inset-0 -top-6 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full p-4 md:p-0">
         <div class="relative top-20 mx-auto p-5 border w-full max-w-2xl shadow-lg rounded-md bg-white">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-xl font-bold text-gray-900">
@@ -15,7 +15,7 @@
 
             <form @submit.prevent="submit" class="space-y-4">
                 <div class="grid grid-cols-2 gap-4">
-                    <div>
+                    <div class="col-span-2 md:col-span-1">
                         <label class="block text-sm font-medium text-gray-700">
                             Nom
                         </label>
@@ -28,7 +28,7 @@
                         <p class="text-red-500" v-if="this.errors.name">{{ this.errors.name }}</p>
                     </div>
 
-                    <div>
+                    <div class="col-span-2 md:col-span-1">
                         <label class="block text-sm font-medium text-gray-700">
                             Type
                         </label>
@@ -42,7 +42,7 @@
                         <p class="text-red-500" v-if="this.errors.type">{{ this.errors.type }}</p>
                     </div>
 
-                    <div>
+                    <div class="col-span-2 md:col-span-1">
                         <label class="block text-sm font-medium text-gray-700">
                             Race
                         </label>
@@ -56,7 +56,7 @@
                         <p class="text-red-500" v-if="this.errors.breed">{{ this.errors.breed }}</p>
                     </div>
 
-                    <div>
+                    <div class="col-span-2 md:col-span-1">
                         <label class="block text-sm font-medium text-gray-700">
                             Âge
                         </label>
@@ -70,7 +70,7 @@
                         <p class="text-red-500" v-if="this.errors.age">{{ this.errors.age }}</p>
                     </div>
 
-                    <div>
+                    <div class="col-span-2 md:col-span-1">
                         <label class="block text-sm font-medium text-gray-700">
                             Prix TTC
                         </label>
@@ -86,7 +86,7 @@
                         <p class="text-red-500" v-if="this.errors.price">{{ this.errors.price }}</p>
                     </div>
 
-                    <div>
+                    <div class="col-span-2 md:col-span-1">
                         <label class="block text-sm font-medium text-gray-700">
                             Prix HT
                         </label>
@@ -100,7 +100,7 @@
                         />
                     </div>
 
-                    <div>
+                    <div class="col-span-2 md:col-span-1">
                         <label class="block text-sm font-medium text-gray-700">
                             Statut
                         </label>
@@ -120,11 +120,11 @@
                     <label class="block text-sm font-medium text-gray-700">
                         Photos
                     </label>
-                    <div class="flex">
+                    <div class="grid grid-cols-5 gap-y-2">
                         <div
                             v-for="(photo, index) in formData.photos"
                             :key="index"
-                            class="relative group"
+                            class="relative group col-span-2 md:col-span-1"
                         >
                             <div
                                 class="w-24 h-24 rounded-lg overflow-hidden border border-gray-200 cursor-pointer hover:border-autumn-500 transition-colors"
