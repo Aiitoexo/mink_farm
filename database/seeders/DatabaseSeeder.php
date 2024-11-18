@@ -22,39 +22,41 @@ class DatabaseSeeder extends Seeder
          ]);
 
          $types = [
-             'dog',
-             'horse',
-             'sheep',
-             'pig',
+             'Chien',
+             'Cheval',
+             'Mouton',
+             'Cochon',
          ];
 
          $breeds = [
-             'dog' => [
-                 'labrador',
-                 'frisian',
-                 'bulldog',
-                 'poodle',
-                 'beagle',
-                 'rottweiler',
-             ],
-             'horse' => [
-                 'thoroughbred',
-                 'mustang',
-                 'clydesdale',
-                 'shetland',
-                 'appaloosa',
-             ],
-             'sheep' => [
-                 'merino',
-                 'dorper',
-                 'suffolk',
-                 'romney',
-             ],
-             'pig' => [
-                 'berkshire',
-                 'duroc',
-                 'hampshire',
-             ],
+            'Chien' => [
+                'Berger allemand',
+                'Labrador',
+                'Bouledogue français',
+                'Caniche',
+                'Chihuahua',
+            ],
+            'Cheval' => [
+                'Pur-sang',
+                'Arabe',
+                'Selle français',
+                'Trait breton',
+                'Poney shetland',
+            ],
+            'Mouton' => [
+                'Mérinos',
+                'Suffolk',
+                'Rouge de l\'Ouest',
+                'Romane',
+                'Charollais',
+            ],
+            'Cochon' => [
+                'Duroc',
+                'Landrace',
+                'Large white',
+                'Piétrain',
+                'Hampshire',
+            ],
          ];
 
         foreach ($types as $type) {
