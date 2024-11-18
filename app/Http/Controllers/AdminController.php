@@ -2,24 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AnimalRequest;
+use App\Models\Animal;
+use App\Models\AnimalBreed;
 use App\Models\AnimalType;
-use App\Services\GetAnimalService;
+use App\Services\AnimalService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class AdminController extends Controller
 {
-    public function index(GetAnimalService $service)
+    public function index(AnimalService $service): Response
     {
         $animals = $service->getAnimals();
 
         $types = AnimalType::all()->select('name', 'id');
+        $breeds = AnimalBreed::all()->select('name', 'id', 'animal_type_id');
 
         return Inertia::render('Auth/Index', [
             'auth' => true,
             'page' => 'admin',
             'animals' => $animals,
             'types' => $types,
+            'breeds' => $breeds,
         ]);
     }
 
@@ -28,19 +35,29 @@ class AdminController extends Controller
 
     }
 
-    public function edit($id)
+    public function update(AnimalRequest $request, Animal $animal, AnimalService $service)
     {
+        $data = $request->validated();
 
+        $animal = $service->updateAnimal($animal, $data);
+
+        if ($animal) {
+            return  redirect()->back();
+        } else {
+            return new JsonResponse(['error' => 'An error occurred'], 500);
+        }
     }
 
-    public function update($id)
+
+    public function delete(Animal $animal, AnimalService $service)
     {
+        $result = $service->deleteAnimal($animal);
 
-    }
-
-    public function delete($id)
-    {
-
+        if ($result) {
+            return redirect()->back();
+        } else {
+            return new JsonResponse(['error' => 'An error occurred'], 500);
+        }
     }
 
     public function logout()

@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\AnimalType;
-use App\Services\GetAnimalService;
+use App\Services\AnimalService;
 use Illuminate\Http\Client\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class HomeController extends Controller
 {
-    public function index(GetAnimalService $service): Response
+    public function index(AnimalService $service): Response
     {
         $animals = $service->getAnimalsAvailable();
 
