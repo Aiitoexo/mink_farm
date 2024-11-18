@@ -25,6 +25,7 @@
                             required
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-autumn-500 focus:ring-autumn-500"
                         />
+                        <p class="text-red-500" v-if="this.errors.name">{{ this.errors.name }}</p>
                     </div>
 
                     <div>
@@ -38,6 +39,7 @@
                         >
                             <option v-for="type in types" :value="type.id">{{ type.name }}</option>
                         </select>
+                        <p class="text-red-500" v-if="this.errors.type">{{ this.errors.type }}</p>
                     </div>
 
                     <div>
@@ -51,6 +53,7 @@
                         >
                             <option v-for="breed in selectedBreed" :value="breed.id">{{ breed.name }}</option>
                         </select>
+                        <p class="text-red-500" v-if="this.errors.breed">{{ this.errors.breed }}</p>
                     </div>
 
                     <div>
@@ -64,6 +67,7 @@
                             min="0"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-autumn-500 focus:ring-autumn-500"
                         />
+                        <p class="text-red-500" v-if="this.errors.age">{{ this.errors.age }}</p>
                     </div>
 
                     <div>
@@ -77,6 +81,7 @@
                             min="0"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-autumn-500 focus:ring-autumn-500"
                         />
+                        <p class="text-red-500" v-if="this.errors.price">{{ this.errors.price }}</p>
                     </div>
 
                     <div>
@@ -91,6 +96,7 @@
                             <option value="available">Disponible</option>
                             <option value="sold">Vendu</option>
                         </select>
+                        <p class="text-red-500" v-if="this.errors.status">{{ this.errors.status }}</p>
                     </div>
                 </div>
 
@@ -133,6 +139,7 @@
                             </div>
                         </div>
                     </div>
+                    <p class="text-red-500" v-if="this.errors.photos">{{ this.errors.photos }}</p>
                 </div>
 
                 <div>
@@ -145,6 +152,7 @@
                         rows="3"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-autumn-500 focus:ring-autumn-500"
                     ></textarea>
+                    <p class="text-red-500" v-if="this.errors.description">{{ this.errors.description }}</p>
                 </div>
 
                 <div class="flex justify-end gap-4">
@@ -225,18 +233,29 @@ export default {
                 ? {
                     ...this.animal,
                     type: this.animal.type.id,
+                    breed: this.animal.breed.id,
                 }
                 : {
                     id: null,
                     name: '',
                     type: 1,
                     breed: '',
-                    age: 0,
+                    age: 1,
                     description: '',
                     price: 0,
                     photos: [],
                     status: 'available'
                 },
+            errors: {
+                name: null,
+                type: null,
+                breed: null,
+                age: null,
+                description: null,
+                price: null,
+                photos: null,
+                status: null
+            },
             allBreeds: this.breeds,
             previewIndex: null
         }
@@ -272,8 +291,58 @@ export default {
         openImagePreview(index) {
             this.previewIndex = index
         },
+        validation() {
+            this.errors = {
+                name: null,
+                type: null,
+                breed: null,
+                age: null,
+                description: null,
+                price: null,
+                photos: null,
+                status: null
+            }
+
+            if (!this.formData.name) {
+                this.errors.name = 'Veuillez renseigner le nom'
+            }
+
+            if (!this.formData.type) {
+                this.errors.type = 'Veuillez renseigner le type'
+            }
+
+            if (!this.formData.breed) {
+                this.errors.breed = 'Veuillez renseigner une race'
+            }
+
+            if (!this.formData.age || this.formData.age <= 0) {
+                this.errors.age = 'Veuillez renseigner l\'âge'
+            }
+
+            if (!this.formData.price || this.formData.price <= 0) {
+                this.errors.price = 'Veuillez renseigner le prix'
+            }
+
+            if (!this.formData.description) {
+                this.errors.description = 'Veuillez renseigner la description'
+            }
+
+            if (this.formData.photos.length < 1) {
+                this.errors.photos = 'Veuillez ajouter au moins une photo'
+            }
+
+            return !(this.errors.name || this.errors.type || this.errors.breed || this.errors.age || this.errors.price || this.errors.description || this.errors.photos);
+        },
         submit() {
-            router.patch(`/admin/update/${this.formData.id}`, this.formData, {
+            let validated = this.validation()
+
+            if (!validated) {
+                return
+            }
+
+            let route = this.animal ? `/admin/update-or-create/${this.formData.id}` : '/admin/update-or-create'
+
+            router.post(route, this.formData, {
                 onSuccess: (response) => {
                     this.$emit('close')
                     this.$emit('animalsUpdated', response.props.animals)

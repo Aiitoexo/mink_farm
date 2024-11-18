@@ -22,7 +22,7 @@ class AnimalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => ['integer', 'exists:animals,id'],
+            'id' => ['nullable', 'integer', 'exists:animals,id'],
             'name' => ['required', 'string'],
             'type' => ['required', 'integer'],
             'breed' => ['required', 'integer'],

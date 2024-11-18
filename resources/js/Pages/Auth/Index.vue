@@ -4,6 +4,24 @@
         :page="page"
     >
         <div class="lg:w-4/5 xl:w-4/6 mx-auto overflow-hidden flex flex-col">
+            <div class="flex justify-between mb-6">
+                <div>
+                  <h1 class="text-3xl font-bold text-autumn-900 mt-6">Administration</h1>
+                  <p class="text-gray-500 mt-2">
+                      Gestion des animaux
+                  </p>
+                </div>
+
+                <div>
+                    <button
+                        class="px-4 py-2 bg-autumn-600 text-autumn-50 rounded-lg hover:bg-autumn-700 transition-colors mt-6"
+                        @click="openModalForm = true"
+                    >
+                        Ajouter un animal
+                    </button>
+                </div>
+            </div>
+
             <FilterBar
                 :types="types"
                 :animals="animals"
@@ -48,14 +66,14 @@
             :types="types"
             :breeds="breeds"
             @close="openModalForm = false"
-            @animalsUpdated="this.allResults = $event"
+            @animalsUpdated="updateResult"
         />
 
         <ModalDeleteAnimal
             v-if="openModalDelete"
             :animal="selectedAnimal"
             @close="openModalDelete = false"
-            @animalsUpdated="this.allResults = $event"
+            @animalsUpdated="updateResult"
         />
     </Layout>
 </template>

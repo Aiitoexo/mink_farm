@@ -24,8 +24,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [AdminController::class, 'index'])->middleware(['auth', 'verified'])->name('admin');
-    Route::post('/create', [AdminController::class, 'create'])->name('admin.create');
-    Route::patch('/update/{animal}', [AdminController::class, 'update'])->name('admin.update');
+    Route::post('/update-or-create/{animal?}', [AdminController::class, 'updateOrCreate'])->name('admin.update');
     Route::delete('/delete/{animal}', [AdminController::class, 'delete'])->name('admin.delete');
 });
 
