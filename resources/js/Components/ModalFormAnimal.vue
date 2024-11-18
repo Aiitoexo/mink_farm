@@ -72,16 +72,32 @@
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700">
-                            Prix
+                            Prix TTC
                         </label>
                         <input
                             type="number"
+                            step="any"
                             v-model.number="formData.price"
+                            @input="formData.price_ht = (formData.price / 1.2).toFixed(2)"
                             required
-                            min="0"
+                            min="1"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-autumn-500 focus:ring-autumn-500"
                         />
                         <p class="text-red-500" v-if="this.errors.price">{{ this.errors.price }}</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">
+                            Prix HT
+                        </label>
+                        <input
+                            type="number"
+                            step="any"
+                            v-model.number="formData.price_ht"
+                            disabled
+                            min="1"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-autumn-500 focus:ring-autumn-500"
+                        />
                     </div>
 
                     <div>
@@ -243,6 +259,7 @@ export default {
                     age: 1,
                     description: '',
                     price: 0,
+                    price_ht: 0,
                     photos: [],
                     status: 'available'
                 },

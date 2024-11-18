@@ -54,6 +54,7 @@ class AnimalService
                     ];
                 }),
                 'price' => $animal->price_ttc / 100,
+                'price_ht' => $animal->price_ht / 100,
             ];
         });
     }
