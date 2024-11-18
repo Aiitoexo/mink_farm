@@ -1,5 +1,9 @@
 ## Projet Mink Farm
 
+- Réalisé avec Laravel pour le back end. 
+- Réalisé avec Vue.js InertiaJs pour le front end.
+- Et TailwindCss pour le design.
+
 ### Pour installer le projet:
 
 1. Cloner le projet
