@@ -66,14 +66,14 @@
             :animal="selectedAnimal"
             :types="types"
             :breeds="breeds"
-            @close="openModalForm = false"
+            @close="openModalForm = false; selectedAnimal = null"
             @animalsUpdated="updateResult"
         />
 
         <ModalDeleteAnimal
             v-if="openModalDelete"
             :animal="selectedAnimal"
-            @close="openModalDelete = false"
+            @close="openModalDelete = false; selectedAnimal = null"
             @animalsUpdated="updateResult"
         />
     </Layout>
